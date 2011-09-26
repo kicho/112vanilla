@@ -199,7 +199,7 @@ MaxOverspeedPings = 2
 GridUnload = 1
 GridCleanUpDelay = 300000
 MapUpdateInterval = 100
-ChangeWeatherInterval = 600000
+ChangeWeatherInterval = 5400000# 90 minutes
 PlayerSave.Interval = 900000
 PlayerSave.Stats.MinLevel = 0
 PlayerSave.Stats.SaveOnlyOnLogout = 1
@@ -748,6 +748,14 @@ Motd = "Welcome to the Massive Network Game Object Server."
 #        Default: 1 (allow)
 #                 0 (not allow)
 #
+#	Fake.WHO.List
+#        Add fake players to fill in WHO LIST (who is online list, "O" button) if there is less then
+#        49 real players online (need to set online=2 in character database in order to work)
+#        Default: 0 (disabled)
+#                 1 (enabled)
+#
+#
+#
 ###################################################################################################################
 
 AllowTwoSide.Accounts = 0
@@ -761,6 +769,7 @@ AllowTwoSide.Interaction.Mail = 0
 AllowTwoSide.WhoList = 0
 AllowTwoSide.AddFriend = 0
 TalentsInspecting = 1
+Fake.Who.List = 0
 
 ###################################################################################################################
 # CREATURE AND GAMEOBJECT SETTINGS

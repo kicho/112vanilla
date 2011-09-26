@@ -193,12 +193,32 @@ void WorldSession::HandleMessagechatOpcode( WorldPacket & recv_data )
             }
 
             Player *player = sObjectMgr.GetPlayer(to.c_str());
+			/*QueryResult *result = CharacterDatabase.PQuery("SELECT * FROM characters WHERE name = '%s' AND online != 0", to.c_str());
+			if (result)
+			QueryResult *result = CharacterDatabase.PQuery("SELECT * FROM characters WHERE name = '%s' AND online != 0", to.c_str());
+			Field *fields = result->Fetch();
+
+			//Player *player = fields[0].GetCppString();
+			//Player *player = fields[0].GetUInt64();
+			uint64 pguid = fields[0].GetUInt64();
+			std::string strpguid = fields[0].GetCppString();
+			std::string pname = fields[1].GetCppString();*/
+
             uint32 tSecurity = GetSecurity();
             uint32 pSecurity = player ? player->GetSession()->GetSecurity() : SEC_PLAYER;
             if (!player || (tSecurity == SEC_PLAYER && pSecurity > SEC_PLAYER && !player->isAcceptWhispers()))
             {
-                SendPlayerNotFoundNotice(to);
-                return;
+				// If Fake WHO List system on then show player DND
+				if (sWorld.getConfig(CONFIG_BOOL_FAKE_WHO_LIST))
+				{
+					sWorld.SendWorldText(LANG_NOT_WHISPER);
+					return;
+				}
+				else
+				{
+					SendPlayerNotFoundNotice(to);
+					return;
+				}
             }
 
             if (!sWorld.getConfig(CONFIG_BOOL_ALLOW_TWO_SIDE_INTERACTION_CHAT) && tSecurity == SEC_PLAYER && pSecurity == SEC_PLAYER )

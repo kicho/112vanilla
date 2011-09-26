@@ -544,7 +544,7 @@ void Master::clearOnlineAccounts()
     /// \todo Only accounts with characters logged on *this* realm should have online status reset. Move the online column from 'account' to 'realmcharacters'?
     LoginDatabase.PExecute("UPDATE account SET active_realm_id = 0 WHERE active_realm_id = '%u'", realmID);
 
-    CharacterDatabase.Execute("UPDATE characters SET online = 0 WHERE online<>0");
+    CharacterDatabase.Execute("UPDATE characters SET online = 0 WHERE online<>0 AND <>2");
 
     // Battleground instance ids reset at server restart
     CharacterDatabase.Execute("UPDATE character_battleground_data SET instance_id = 0");

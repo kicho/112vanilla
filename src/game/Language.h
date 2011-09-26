@@ -91,7 +91,17 @@ enum MangosStrings
     LANG_GM_NO_WHISPER                  = 64,
     LANG_USING_SCRIPT_LIB_UNKNOWN       = 65,
     LANG_USING_SCRIPT_LIB_NONE          = 66,
-    // Room for more level 0              67-99 not used
+	// Room for more level 0              73-99 not used
+	LANG_SYSTEMMESSAGE_MODERATOR        = 67,
+	LANG_SYSTEMMESSAGE_GAMEMASTER       = 68,
+	LANG_SYSTEMMESSAGE_ADMINISTRATOR    = 69,
+	LANG_SYSTEMMESSAGE_DEVELOPER        = 70,
+	LANG_SYSTEMMESSAGE_OWNER            = 71,
+	LANG_SYSTEMMESSAGE_CONSOLE          = 72,
+	// Room for more level 0              75-99 not used
+	LANG_BAN_WORLD_ANNOUNCE             = 73,
+	LANG_PERMBAN_WORLD_ANNOUNCE         = 74,
+    // Room for more level 0              75-99 not used
 
     // level 1 chat
     LANG_GLOBAL_NOTIFY                  = 100,
@@ -987,7 +997,8 @@ enum MangosStrings
     LANG_NPC_EVENTAI_COMBAT             = 1508,
     // Room for more Level 2              1509-1599 not used
 
-    // FREE IDS                           1600-9999
+    // FREE IDS                           1601-9999
+	LANG_NOT_WHISPER                    = 1600,
 
     // Use for not-in-offcial-sources patches
     //                                    10000-10999

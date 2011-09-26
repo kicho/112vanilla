@@ -1,0 +1,2 @@
+DELETE FROM mangos_string WHERE entry = 1600;
+INSERT INTO `mangos_string` VALUES ('1600', 'Player wishes to not be disturbed and cannot receive whisper messages.', null, null, null, null, null, null, null, null);
