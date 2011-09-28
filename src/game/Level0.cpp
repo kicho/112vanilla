@@ -114,10 +114,19 @@ bool ChatHandler::HandleServerInfoCommand(char* /*args*/)
     else
         SendSysMessage(LANG_USING_SCRIPT_LIB_NONE);
 
-    PSendSysMessage(LANG_USING_WORLD_DB,sWorld.GetDBVersion());
-    PSendSysMessage(LANG_USING_EVENT_AI,sWorld.GetCreatureEventAIVersion());
+    //PSendSysMessage(LANG_USING_WORLD_DB,sWorld.GetDBVersion());
+    //PSendSysMessage(LANG_USING_EVENT_AI,sWorld.GetCreatureEventAIVersion());
+
+	if (sWorld.getConfig(CONFIG_BOOL_FAKE_WHO_LIST))
+	{
+	PSendSysMessage(LANG_CONNECTED_USERS + 50, activeClientsNum +50, maxActiveClientsNum +50, queuedClientsNum +50, maxQueuedClientsNum +50);
+    PSendSysMessage(LANG_UPTIME, str.c_str());
+	}
+	else
+	{
     PSendSysMessage(LANG_CONNECTED_USERS, activeClientsNum, maxActiveClientsNum, queuedClientsNum, maxQueuedClientsNum);
     PSendSysMessage(LANG_UPTIME, str.c_str());
+	}
 
     return true;
 }
