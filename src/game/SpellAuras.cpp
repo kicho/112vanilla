@@ -45,7 +45,6 @@
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"
 #include "CellImpl.h"
-#include "extras/Mod.h"
 
 #define NULL_AURA_SLOT 0xFF
 
@@ -584,7 +583,6 @@ void Aura::ApplyModifier(bool apply, bool Real)
     if(aura < TOTAL_AURAS)
         (*this.*AuraHandler [aura])(apply, Real);
 
-    sMod.auraApplyModifier(this,aura,apply,Real);
     SetInUse(false);
     GetHolder()->SetInUse(false);
 }
@@ -5307,6 +5305,22 @@ void SpellAuraHolder::HandleSpellSpecificBoosts(bool apply)
         {
             switch(GetId())
             {
+                case 11129:                                 // Combustion (remove triggered aura stack)
+                {
+                    if(!apply)
+                        spellId1 = 28682;
+                    else
+                        return;
+                    break;
+                }
+                case 28682:                                 // Combustion (remove main aura)
+                {
+                    if(!apply)
+                        spellId1 = 11129;
+                    else
+                        return;
+                    break;
+                }
                 case 11189:                                 // Frost Warding
                 case 28332:
                 {

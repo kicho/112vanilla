@@ -50,7 +50,6 @@
 #include "DBCStores.h"
 #include "VMapFactory.h"
 #include "MovementGenerator.h"
-#include "extras/Mod.h"
 
 #include <math.h>
 #include <stdarg.h>
@@ -7237,30 +7236,15 @@ void Unit::IncrDiminishing(DiminishingGroup group)
     m_Diminishing.push_back(DiminishingReturn(group,WorldTimer::getMSTime(),DIMINISHING_LEVEL_2));
 }
 
-void Unit::ApplyDiminishingToDuration(DiminishingGroup group, int32 &duration,Unit* caster,DiminishingLevels Level, bool isReflected)
+void Unit::ApplyDiminishingToDuration(DiminishingGroup group, int32 &duration, Unit* caster, DiminishingLevels Level, bool isReflected)
 {
-    if(duration == -1 || group == DIMINISHING_NONE || (!isReflected && caster->IsFriendlyTo(this)) )
+    if (duration == -1 || group == DIMINISHING_NONE || (!isReflected && caster->IsFriendlyTo(this)))
         return;
-
-    // Duration of crowd control abilities on pvp target is limited for some spells
-    // In pre-BC limited by 15 sec.
-    if (duration > 15*IN_MILLISECONDS && IsDiminishingReturnsGroupDurationLimited(group))
-    {
-        // test pet/charm masters instead pets/charmeds
-        Unit const* targetOwner = unit->GetCharmerOrOwner();
-        Unit const* casterOwner = caster->GetCharmerOrOwner();
-
-        Unit const* target = targetOwner ? targetOwner : unit;
-        Unit const* source = casterOwner ? casterOwner : caster;
-
-        if(target->GetTypeId() == TYPEID_PLAYER && source->GetTypeId() == TYPEID_PLAYER)
-            duration = 15000;
-    }
 
     float mod = 1.0f;
 
     // Some diminishings applies to mobs too (for example, Stun)
-    if((GetDiminishingReturnsGroupType(group) == DRTYPE_PLAYER && GetTypeId() == TYPEID_PLAYER) || GetDiminishingReturnsGroupType(group) == DRTYPE_ALL)
+    if ((GetDiminishingReturnsGroupType(group) == DRTYPE_PLAYER && GetTypeId() == TYPEID_PLAYER) || GetDiminishingReturnsGroupType(group) == DRTYPE_ALL)
     {
         DiminishingLevels diminish = Level;
         switch(diminish)

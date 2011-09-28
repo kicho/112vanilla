@@ -43,7 +43,6 @@
 #include "LootMgr.h"
 #include "VMapFactory.h"
 #include "BattleGround.h"
-#include "extras/Mod.h"
 #include "Util.h"
 #include "Chat.h"
 
@@ -1148,7 +1147,7 @@ void Spell::DoSpellHitOnUnit(Unit *unit, uint32 effectMask, bool isReflected)
     }
 
     // Get Data Needed for Diminishing Returns, some effects may have multiple auras, so this must be done on spell hit, not aura add
-    m_diminishGroup = GetDiminishingReturnsGroupForSpell(m_spellInfo,m_triggeredByAuraSpell);
+    m_diminishGroup = GetDiminishingReturnsGroupForSpell(m_spellInfo, m_triggeredByAuraSpell);
     m_diminishLevel = unit->GetDiminishing(m_diminishGroup);
     // Increase Diminishing on unit, current informations for actually casts will use values above
     if ((GetDiminishingReturnsGroupType(m_diminishGroup) == DRTYPE_PLAYER && unit->GetTypeId() == TYPEID_PLAYER) ||
@@ -2426,7 +2425,7 @@ void Spell::prepare(SpellCastTargets const* targets, Aura* triggeredByAura)
     }
 
     // Prepare data for triggers
-      prepareDataForTriggerSystem();
+    prepareDataForTriggerSystem();
 
     // calculate cast time (calculated after first CheckCast check to prevent charge counting for first CheckCast fail)
     m_casttime = GetSpellCastTime(m_spellInfo, this);
@@ -2442,8 +2441,6 @@ void Spell::prepare(SpellCastTargets const* targets, Aura* triggeredByAura)
         m_caster->RemoveSpellsCausingAura(SPELL_AURA_MOD_STEALTH);
         m_caster->RemoveSpellsCausingAura(SPELL_AURA_FEIGN_DEATH);
     }
-
-    sMod.spellPrepare(this, m_caster);  // extra for prepare
 
     // add non-triggered (with cast time and without)
     if (!m_IsTriggeredSpell)
@@ -3692,7 +3689,6 @@ void Spell::HandleEffects(Unit *pUnitTarget,Item *pItemTarget,GameObject *pGOTar
     if(eff < TOTAL_SPELL_EFFECTS)
     {
         (*this.*SpellEffects[eff])(i);
-         sMod.spellEffect(this, eff , i);  // extra for prepare
     }
     else
     {
